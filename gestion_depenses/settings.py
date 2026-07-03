@@ -106,7 +106,6 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
 # =========================
 # DEFAULT AUTO FIELD
 # =========================
@@ -119,3 +118,6 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'misagos52@gmail.com'
 EMAIL_HOST_PASSWORD = 'spng lunn bqmi obtf'
+# STATIC 
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
