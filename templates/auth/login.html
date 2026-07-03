@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion</title>
+
+    <style>
+        body{
+            font-family: Arial;
+            background:#2c3e50;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            margin:0;
+        }
+
+        .box{
+            background:white;
+            width:360px;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0px 5px 15px rgba(0,0,0,.3);
+        }
+
+        h2{
+            text-align:center;
+            margin-bottom:20px;
+        }
+
+        input{
+            width:100%;
+            padding:10px;
+            margin-bottom:15px;
+            border:1px solid #ccc;
+            border-radius:5px;
+        }
+
+        button{
+            width:100%;
+            padding:10px;
+            background:#3498db;
+            color:white;
+            border:none;
+            cursor:pointer;
+            border-radius:5px;
+        }
+
+        button:hover{
+            background:#2980b9;
+        }
+
+        .error{
+            color:red;
+            text-align:center;
+            margin-bottom:10px;
+        }
+
+        .success{
+            color:green;
+            text-align:center;
+            margin-bottom:10px;
+        }
+
+        a{
+            display:block;
+            text-align:center;
+            margin-top:15px;
+            text-decoration:none;
+            color:#3498db;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+    <h2>🔐 Connexion</h2>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if success %}
+        <div class="success">{{ success }}</div>
+    {% endif %}
+
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        <input type="email" name="email" placeholder="Email" required>
+
+        <input type="password" name="password" placeholder="Mot de passe" required>
+
+        <button type="submit">
+            Se connecter
+        </button>
+    </form>
+
+    <a href="/auth/register/">Créer un compte</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>👥 Gestion des utilisateurs</h2>
+
+<div class="card">
+
+<table border="1" width="100%" cellpadding="10">
+    <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Rôle</th>
+        <th>Statut</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for u in users %}
+    <tr>
+        <td>{{ u.id }}</td>
+        <td>{{ u.nom }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.role }}</td>
+        <td>
+            {% if u.statut == "autorisé" %}
+                <span style="color:green;">✔ autorisé</span>
+            {% else %}
+                <span style="color:red;">⏳ en attente</span>
+            {% endif %}
+        </td>
+
+        <td>
+
+            <!-- ✔ AUTORISER -->
+            <a href="/auth/approve/{{ u.id }}/"
+               style="color:green; font-weight:bold;">
+                Autoriser
+            </a>
+
+            |
+
+            <!-- ⛔ SUSPENDRE -->
+            <a href="/auth/suspend/{{ u.id }}/"
+               style="color:red; font-weight:bold;">
+                Suspendre
+            </a>
+
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}

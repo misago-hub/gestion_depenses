@@ -1,0 +1,69 @@
+<h2>Dashboard Admin</h2>
+
+<div>
+    <p>💰 Total revenus : {{ revenus }}</p>
+    <p>💸 Total dépenses : {{ depenses }}</p>
+    <p>📊 Solde global : {{ solde }}</p>
+</div>
+
+<hr>
+
+<h2>📊 Graphiques Admin</h2>
+
+<canvas id="financeChart"></canvas>
+
+<br><br>
+
+<canvas id="categoryChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+/* =========================
+   BAR CHART
+========================= */
+
+const revenus = Number("{{ chart_data.revenus|default:0 }}");
+const depenses = Number("{{ chart_data.depenses|default:0 }}");
+
+new Chart(document.getElementById("financeChart"), {
+    type: "bar",
+    data: {
+        labels: ["Revenus", "Dépenses"],
+        datasets: [{
+            label: "FBu",
+            data: [revenus, depenses],
+            backgroundColor: ["green", "red"]
+        }]
+    }
+});
+
+/* =========================
+   PIE CHART
+========================= */
+
+new Chart(document.getElementById("categoryChart"), {
+    type: "pie",
+    data: {
+        labels: [
+            {% for c in categories_chart %}
+                "{{ c.categorie__nom }}"{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ],
+        datasets: [{
+            data: [
+                {% for c in categories_chart %}
+                    {{ c.total }}{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ],
+            backgroundColor: [
+                "#3498db",
+                "#e74c3c",
+                "#2ecc71",
+                "#f1c40f",
+                "#9b59b6"
+            ]
+        }]
+    }
+});
+</script>

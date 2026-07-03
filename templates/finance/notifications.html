@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card">
+    <h2>🔔 Notifications</h2>
+
+    {% for n in notifications %}
+
+        <div style="padding:10px; border-bottom:1px solid #ddd;">
+
+            <strong>{{ n.titre }}</strong><br>
+            <small>{{ n.date }}</small><br>
+            <p>{{ n.message }}</p>
+
+            {% if not n.lu %}
+                <a href="{% url 'mark_as_read' n.id %}">✔ Marquer comme lu</a>
+            {% else %}
+                <span style="color:green;">✔ Lu</span>
+            {% endif %}
+
+        </div>
+
+    {% empty %}
+        <p>Aucune notification</p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

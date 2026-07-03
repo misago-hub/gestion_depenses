@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>✏️ Modifier Transaction</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <select name="type">
+        <option value="revenu" {% if transaction.type == "revenu" %}selected{% endif %}>Revenu</option>
+        <option value="depense" {% if transaction.type == "depense" %}selected{% endif %}>Dépense</option>
+    </select>
+
+    <br><br>
+
+    <input type="number" name="montant" value="{{ transaction.montant }}">
+
+    <br><br>
+
+    <select name="categorie">
+        {% for c in categories %}
+            <option value="{{ c.id }}"
+                {% if transaction.categorie.id == c.id %}selected{% endif %}>
+                {{ c.nom }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <textarea name="description">{{ transaction.description }}</textarea>
+
+    <br><br>
+
+    <button class="btn btn-add">Modifier</button>
+</form>
+
+{% endblock %}

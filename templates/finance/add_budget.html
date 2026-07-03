@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+/* =========================
+   FORM CONTAINER PRO
+========================= */
+.form-box {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    max-width: 650px;
+}
+
+/* TITLE */
+.form-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+/* LABEL */
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* INPUTS */
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #1abc9c;
+    box-shadow: 0 0 5px rgba(26,188,156,0.3);
+}
+
+/* BUTTONS */
+.btn {
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-success {
+    background: #1abc9c;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #16a085;
+}
+
+.btn-secondary {
+    background: #95a5a6;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #7f8c8d;
+}
+
+</style>
+
+<div class="form-box">
+
+    <div class="form-title">📊 Ajouter un budget</div>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <!-- =========================
+             CATEGORIE
+        ========================= -->
+        <label>📂 Catégorie</label>
+
+        <select name="categorie" required>
+            <option value="">-- Choisir une catégorie --</option>
+
+            {% for categorie in categories %}
+                <option value="{{ categorie.id }}">
+                    {{ categorie.nom }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <!-- =========================
+             MONTANT
+        ========================= -->
+        <label>💰 Montant du budget (FBu)</label>
+
+        <input type="number"
+               name="montant"
+               step="0.01"
+               min="0"
+               placeholder="Ex : 500000"
+               required>
+
+        <!-- =========================
+             MOIS (PRO FIX ERROR)
+        ========================= -->
+        <label>📅 Mois</label>
+
+        <select name="mois" required>
+
+            <option value="">-- Choisir le mois --</option>
+
+            <option value="1">Janvier</option>
+            <option value="2">Février</option>
+            <option value="3">Mars</option>
+            <option value="4">Avril</option>
+            <option value="5">Mai</option>
+            <option value="6">Juin</option>
+            <option value="7">Juillet</option>
+            <option value="8">Août</option>
+            <option value="9">Septembre</option>
+            <option value="10">Octobre</option>
+            <option value="11">Novembre</option>
+            <option value="12">Décembre</option>
+
+        </select>
+
+        <!-- =========================
+             ANNEE
+        ========================= -->
+        <label>📆 Année</label>
+
+        <input type="number"
+               name="annee"
+               min="2020"
+               max="2100"
+               value="2026"
+               required>
+
+        <!-- =========================
+             BUTTONS
+        ========================= -->
+        <button type="submit" class="btn btn-success">
+            💾 Enregistrer
+        </button>
+
+        <a href="{% url 'budget_list' %}" class="btn btn-secondary">
+            Annuler
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

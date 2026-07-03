@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+/* =========================
+   TITLE
+========================= */
+.title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* BUTTON ADD */
+.btn-add {
+    background: #1abc9c;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.btn-add:hover {
+    background: #16a085;
+}
+
+/* TABLE */
+.table-box {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #2c3e50;
+    color: white;
+    padding: 12px;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+/* BADGES */
+.badge {
+    padding: 5px 10px;
+    border-radius: 8px;
+    color: white;
+    font-size: 12px;
+}
+
+.ok { background: #2ecc71; }
+.warning { background: #f39c12; }
+.danger { background: #e74c3c; }
+
+/* PROGRESS BAR */
+.progress {
+    width: 100%;
+    height: 8px;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 8px;
+    background: #1abc9c;
+}
+
+</style>
+
+<!-- =========================
+     TITLE
+========================= -->
+<div class="title">📊 Budgets par catégorie</div>
+
+<a href="{% url 'add_budget' %}" class="btn-add">
+    ➕ Ajouter un budget
+</a>
+
+<!-- =========================
+     TABLE
+========================= -->
+<div class="table-box">
+
+<table>
+
+<tr>
+    <th>Catégorie</th>
+    <th>Budget</th>
+    <th>Dépensé</th>
+    <th>Reste</th>
+    <th>Utilisation</th>
+    <th>Statut</th>
+    <th>Actions</th>
+</tr>
+
+{% for b in budgets %}
+
+<tr>
+
+    <td>{{ b.categorie.nom }}</td>
+
+    <td>{{ b.montant }} FBu</td>
+
+    <td>{{ b.depense }} FBu</td>
+
+    <td>{{ b.reste }} FBu</td>
+
+    <td>
+
+        <div class="progress">
+            <div class="progress-bar" style="width: {{ b.pourcentage }}%"></div>
+        </div>
+
+        {{ b.pourcentage }}%
+
+    </td>
+
+    <td>
+
+        {% if b.pourcentage >= 100 %}
+            <span class="badge danger">Dépassé</span>
+        {% elif b.pourcentage >= 80 %}
+            <span class="badge warning">Attention</span>
+        {% else %}
+            <span class="badge ok">OK</span>
+        {% endif %}
+
+    </td>
+
+    <td>
+
+        <a href="{% url 'edit_budget' b.id %}">✏</a>
+
+        <a href="{% url 'delete_budget' b.id %}"
+           onclick="return confirm('Supprimer ?')">
+           🗑
+        </a>
+
+    </td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+    <td colspan="7" style="text-align:center;color:gray;">
+        Aucun budget défini.
+    </td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+/* =========================
+   FORM PRO BOX
+========================= */
+.form-box {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    max-width: 500px;
+}
+
+/* TITLE */
+.form-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+/* LABEL */
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #1abc9c;
+    box-shadow: 0 0 5px rgba(26,188,156,0.3);
+}
+
+/* BUTTONS */
+.btn {
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: #1abc9c;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #16a085;
+}
+
+.btn-secondary {
+    background: #95a5a6;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #7f8c8d;
+}
+
+</style>
+
+<div class="form-box">
+
+    <!-- TITLE -->
+    <div class="form-title">✏ Modifier une catégorie</div>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <!-- =========================
+             NOM CATEGORIE
+        ========================= -->
+        <label>🏷 Nom de la catégorie</label>
+
+        <input type="text"
+               name="nom"
+               value="{{ categorie.nom }}"
+               placeholder="Ex : Transport, Nourriture..."
+               required>
+
+        <!-- =========================
+             BUTTONS
+        ========================= -->
+        <button type="submit" class="btn btn-primary">
+            💾 Modifier
+        </button>
+
+        <a href="{% url 'category_list' %}" class="btn btn-secondary">
+            Annuler
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

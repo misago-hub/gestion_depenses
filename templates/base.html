@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Finance Pro</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f6f9;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:250px;
+    height:100vh;
+    background:linear-gradient(180deg,#1f2c3c,#2c3e50);
+    position:fixed;
+    left:0;
+    top:0;
+    overflow-y:auto;
+    box-shadow:3px 0 10px rgba(0,0,0,.2);
+}
+
+.sidebar h2{
+    color:white;
+    text-align:center;
+    margin-top:20px;
+    margin-bottom:15px;
+}
+
+.user-box{
+    text-align:center;
+    color:white;
+    padding-bottom:20px;
+    border-bottom:1px solid rgba(255,255,255,.15);
+    margin-bottom:15px;
+}
+
+.user-box img{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid white;
+}
+
+.user-box strong{
+    display:block;
+    margin-top:10px;
+    font-size:16px;
+}
+
+.user-box small{
+    color:#bdc3c7;
+}
+
+.sidebar a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:white;
+    text-decoration:none;
+    padding:13px 20px;
+    transition:.3s;
+    border-left:4px solid transparent;
+}
+
+.sidebar a:hover{
+    background:rgba(255,255,255,.08);
+    border-left:4px solid #1abc9c;
+}
+
+/* CONTENT */
+.content{
+    margin-left:250px;
+    padding:25px;
+}
+
+.card{
+    background:white;
+    border-radius:10px;
+    padding:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+    margin-bottom:20px;
+}
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- ========================= SIDEBAR ========================= -->
+<div class="sidebar">
+
+<h2>💰 FINANCE</h2>
+
+<div class="user-box">
+
+{% if request.user.photo %}
+    <img src="{{ request.user.photo.url }}">
+{% else %}
+    <img src="/media/profiles/default.png">
+{% endif %}
+
+<strong>{{ request.user.nom }}</strong>
+<small>{{ request.user.role|title }}</small>
+
+</div>
+
+<a href="{% url 'dashboard' %}">
+    <i class="fa fa-home"></i> Dashboard
+</a>
+
+<a href="{% url 'revenu_list' %}">
+    <i class="fa fa-coins"></i> Revenus
+</a>
+
+<a href="{% url 'transaction_list' %}">
+    <i class="fa fa-money-bill-wave"></i> Transactions
+</a>
+
+<a href="{% url 'budget_list' %}">
+    <i class="fa fa-chart-line"></i> Budgets
+</a>
+
+<a href="{% url 'category_list' %}">
+    <i class="fa fa-folder"></i> Catégories
+</a>
+
+<a href="{% url 'notification_list' %}">
+    <i class="fa fa-bell"></i> Notifications
+</a>
+
+<a href="{% url 'historique' %}">
+    <i class="fa fa-history"></i> Historique
+</a>
+
+<!-- ADMIN ONLY -->
+{% if request.user.is_authenticated %}
+
+<a href="{% url 'admin_users' %}">
+    <i class="fa fa-users"></i> Utilisateurs
+</a>
+
+<a href="{% url 'send_report' %}">
+    <i class="fa fa-file-alt"></i> Rapport
+</a>
+
+{% endif %}
+
+<a href="{% url 'profile' %}">
+    <i class="fa fa-user-circle"></i> Mon Profil
+</a>
+
+<a href="{% url 'logout' %}">
+    <i class="fa fa-sign-out-alt"></i> Déconnexion
+</a>
+
+</div>
+
+<!-- ========================= CONTENT ========================= -->
+<div class="content">
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+</body>
+</html>

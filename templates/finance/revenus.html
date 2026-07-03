@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{% url 'add_revenu' %}" 
+   style="
+        display:inline-block;
+        background:#1abc9c;
+        color:white;
+        padding:10px 15px;
+        border-radius:8px;
+        text-decoration:none;
+        margin-bottom:15px;
+   ">
+    ➕ Ajouter un revenu
+</a>
+<style>
+
+/* =========================
+   TITLE + TOTAL CARD
+========================= */
+.title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.total-box {
+    background: linear-gradient(135deg, #16a085, #2ecc71);
+    color: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    width: fit-content;
+}
+
+/* =========================
+   TABLE
+========================= */
+.table-box {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #2c3e50;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+/* HOVER EFFECT */
+tr:hover {
+    background: #f9f9f9;
+}
+
+</style>
+
+<!-- =========================
+     TITLE
+========================= -->
+<div class="title">💰 Revenus</div>
+
+<!-- =========================
+     TOTAL
+========================= -->
+<div class="total-box">
+    💰 Total : <strong>{{ total }} FBu</strong>
+</div>
+
+<!-- =========================
+     TABLE
+========================= -->
+<div class="table-box">
+
+<table>
+
+<tr>
+    <th>Date</th>
+    <th>Source</th>
+    <th>Montant</th>
+</tr>
+
+{% for r in revenus %}
+
+<tr>
+    <td>{{ r.date|date:"Y-m-d H:i" }}</td>
+    <td>{{ r.source }}</td>
+    <td><strong>{{ r.montant }} FBu</strong></td>
+</tr>
+
+{% empty %}
+
+<tr>
+    <td colspan="3" style="text-align:center;color:gray;">
+        Aucun revenu trouvé
+    </td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+/* =========================
+   FORM PRO
+========================= */
+.form-box {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    max-width: 650px;
+}
+
+/* TITLE */
+.form-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+/* SOLDE CARD */
+.solde-box {
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* ALERT ERROR */
+.alert-error {
+    background: #e74c3c;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* LABEL */
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* INPUTS */
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #1abc9c;
+    box-shadow: 0 0 5px rgba(26,188,156,0.3);
+}
+
+/* BUTTONS */
+.btn {
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.btn-success {
+    background: #1abc9c;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #16a085;
+}
+
+.btn-secondary {
+    background: #95a5a6;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #7f8c8d;
+}
+
+</style>
+
+<div class="form-box">
+
+    <!-- TITLE -->
+    <div class="form-title">💸 Ajouter une transaction</div>
+
+    <!-- SOLDE -->
+    <div class="solde-box">
+        💰 Solde actuel :
+        <strong>{{ solde }} FBu</strong>
+    </div>
+
+    <!-- ERROR -->
+    {% if error %}
+        <div class="alert-error">
+            ❌ {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <!-- TYPE -->
+        <label>🔄 Type de transaction</label>
+
+        <select name="type" required>
+
+            <option value="">-- Choisir --</option>
+            <option value="revenu">💰 Revenu</option>
+            <option value="depense">💸 Dépense</option>
+
+        </select>
+
+        <!-- MONTANT -->
+        <label>💰 Montant (FBu)</label>
+
+        <input type="number"
+               name="montant"
+               step="0.01"
+               min="0"
+               placeholder="Ex : 50000"
+               required>
+
+        <!-- CATEGORIE -->
+        <label>📂 Catégorie</label>
+
+        <select name="categorie" required>
+
+            <option value="">-- Choisir une catégorie --</option>
+
+            {% for categorie in categories %}
+                <option value="{{ categorie.id }}">
+                    {{ categorie.nom }}
+                </option>
+            {% endfor %}
+
+        </select>
+
+        <!-- DESCRIPTION -->
+        <label>📝 Description</label>
+
+        <textarea name="description"
+                  rows="4"
+                  placeholder="Description (facultatif)"></textarea>
+
+        <!-- BUTTONS -->
+        <button type="submit" class="btn btn-success">
+            💾 Enregistrer
+        </button>
+
+        <a href="{% url 'transaction_list' %}" class="btn btn-secondary">
+            ❌ Annuler
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

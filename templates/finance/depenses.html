@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Dépenses</h2>
+
+<a href="/finance/depenses/add/">➕ Ajouter</a>
+
+<ul>
+{% for d in data %}
+    <li>
+        {{ d.montant }} Fbu - {{ d.categorie }}
+        <a href="/finance/depenses/delete/{{ d.id }}/">❌</a>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

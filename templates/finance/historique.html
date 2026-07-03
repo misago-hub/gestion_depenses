@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+.title{
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.box{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#2c3e50;
+    color:white;
+    padding:10px;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #eee;
+}
+
+.badge{
+    padding:4px 8px;
+    border-radius:6px;
+    color:white;
+    font-size:12px;
+}
+
+.revenu{background:#2ecc71;}
+.depense{background:#e74c3c;}
+
+</style>
+
+<div class="title">🕒 Historique financier</div>
+
+<div class="box">
+
+<table>
+
+<tr>
+    <th>Date</th>
+    <th>Type</th>
+    <th>Libellé</th>
+    <th>Montant</th>
+    <th>Description</th>
+</tr>
+
+{% for h in historique %}
+
+<tr>
+
+    <td>{{ h.date }}</td>
+
+    <td>
+        {% if h.type == "Revenu" %}
+            <span class="badge revenu">Revenu</span>
+        {% else %}
+            <span class="badge depense">Dépense</span>
+        {% endif %}
+    </td>
+
+    <td>{{ h.libelle }}</td>
+
+    <td>{{ h.montant }} FBu</td>
+
+    <td>{{ h.description }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}

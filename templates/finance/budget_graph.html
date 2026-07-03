@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>📊 Budget vs Dépenses par catégorie</h2>
+
+<div style="width:80%; margin:auto;">
+    <canvas id="chart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx = document.getElementById('chart');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ labels|safe }},
+        datasets: [
+            {
+                label: 'Budget',
+                data: {{ budgets|safe }},
+                backgroundColor: '#2ecc71'
+            },
+            {
+                label: 'Dépenses',
+                data: {{ depenses|safe }},
+                backgroundColor: '#e74c3c'
+            }
+        ]
+    }
+});
+</script>
+
+{% endblock %}
