@@ -10,7 +10,11 @@ SECRET_KEY = 'django-insecure-change-this-in-production'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "web-production-2c91f.up.railway.app",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # =========================
