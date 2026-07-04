@@ -15,7 +15,9 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
 ]
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://web-production-2c91f.up.railway.app",
+]
 
 # =========================
 # APPLICATIONS
