@@ -15,6 +15,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
 ]
+
 CSRF_TRUSTED_ORIGINS = [
     "https://web-production-2c91f.up.railway.app",
 ]
@@ -51,13 +52,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
 # =========================
 # URL ROOT
 # =========================
 
 ROOT_URLCONF = 'gestion_depenses.urls'
-
 
 # =========================
 # TEMPLATES
@@ -80,6 +79,12 @@ TEMPLATES = [
 ]
 
 # =========================
+# WSGI
+# =========================
+
+WSGI_APPLICATION = 'gestion_depenses.wsgi.application'
+
+# =========================
 # DATABASE
 # =========================
 
@@ -89,9 +94,38 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-# TIMEZONE FIX (AJOUT ICI)
+
+# =========================
+# PASSWORD VALIDATION
+# =========================
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+# =========================
+# LANGUAGE / TIME
+# =========================
+
+LANGUAGE_CODE = 'fr-fr'
+
 TIME_ZONE = 'Africa/Bujumbura'
+
+USE_I18N = True
+
 USE_TZ = True
+
 # =========================
 # AUTH SYSTEM
 # =========================
@@ -102,28 +136,40 @@ LOGIN_URL = '/auth/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/auth/login/'
 
-
 # =========================
 # STATIC / MEDIA
 # =========================
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 MEDIA_URL = '/media/'
+
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# =========================
+# EMAIL
+# =========================
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'misagos52@gmail.com'
+
+EMAIL_HOST_PASSWORD = 'spng lunn bqmi obtf'
 
 # =========================
 # DEFAULT AUTO FIELD
 # =========================
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
-EMAIL_HOST_USER = 'misagos52@gmail.com'
-EMAIL_HOST_PASSWORD = 'spng lunn bqmi obtf'
-# STATIC 
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
