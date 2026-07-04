@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'finance',
     'dashboard',
     'notifications',
+    'pwa',
 ]
 
 # =========================
@@ -173,3 +174,26 @@ EMAIL_HOST_PASSWORD = 'spng lunn bqmi obtf'
 # =========================
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+PWA_APP_NAME = "Gestion Depenses"
+PWA_APP_SHORT_NAME = "Depenses"
+PWA_APP_DESCRIPTION = "Application de gestion des dépenses"
+PWA_APP_THEME_COLOR = "#0d6efd"
+PWA_APP_BACKGROUND_COLOR = "#ffffff"
+PWA_APP_DISPLAY = "standalone"
+PWA_APP_SCOPE = "/"
+PWA_APP_ORIENTATION = "portrait"
+PWA_APP_STATUS_BAR_COLOR = "default"
+
+PWA_APP_ICONS = [
+    {
+        "src": "/static/icons/icon-192x192.png",
+        "sizes": "192x192"
+    },
+    {
+        "src": "/static/icons/icon-512x512.png",
+        "sizes": "512x512"
+    }
+]
+
+PWA_APP_START_URL = "/"
+PWA_SERVICE_WORKER_PATH = "serviceworker.js"

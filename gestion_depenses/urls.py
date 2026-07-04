@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 
-# AJOUTER CES 2 LIGNES
+# AJOUTER 
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -14,6 +14,8 @@ urlpatterns = [
     path("finance/", include("finance.urls")),
 
     path("", include("dashboard.urls")),
+
+    path("pwa/", include("pwa.urls")),
 
 ]
 
