@@ -8,15 +8,132 @@
 
     <title>Gestion Dépenses</title>
 
-    <!-- ================= PWA ================= -->
     <link rel="manifest" href="{% static 'manifest.json' %}">
-    <meta name="theme-color" content="#2c3e50">
+    <meta name="theme-color" content="#1f2a37">
 
-    <!-- ================= CSS ================= -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- FontAwesome (si tu l’utilises) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+
+        body{
+            margin:0;
+            font-family:Arial;
+            background:#f4f6f9;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar{
+            width:260px;
+            height:100vh;
+            background:#1f2a37;
+            color:white;
+            position:fixed;
+            top:0;
+            left:0;
+            display:flex;
+            flex-direction:column;
+        }
+
+        .sidebar-top{
+            padding:20px;
+            overflow-y:auto;
+            flex:1;
+        }
+
+        .logo{
+            font-size:22px;
+            font-weight:bold;
+            margin-bottom:20px;
+        }
+
+        .logo span{
+            color:#00d4ff;
+        }
+
+        .user-box{
+            text-align:center;
+            margin-bottom:20px;
+        }
+
+        .user-box img{
+            width:70px;
+            height:70px;
+            border-radius:50%;
+            object-fit:cover;
+        }
+
+        .user-box h3{
+            margin:10px 0 0;
+        }
+
+        .user-box small{
+            color:#aaa;
+        }
+
+        .menu-title{
+            font-size:12px;
+            color:#888;
+            margin:15px 0 5px;
+            text-transform:uppercase;
+        }
+
+        .sidebar a{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            padding:10px;
+            color:white;
+            text-decoration:none;
+            border-radius:8px;
+            transition:0.2s;
+        }
+
+        .sidebar a:hover{
+            background:#2c3e50;
+        }
+
+        .sidebar a.active{
+            background:#00d4ff;
+            color:#000;
+        }
+
+        /* ===== LOGOUT FIXED ===== */
+        .sidebar-bottom{
+            padding:15px;
+            border-top:1px solid #2c3e50;
+        }
+
+        .sidebar a.logout{
+            background:#ff4d4d;
+            color:white;
+        }
+
+        .sidebar a.logout:hover{
+            background:#ff1f1f;
+        }
+
+        /* ===== CONTENT ===== */
+        .content{
+            margin-left:260px;
+            padding:20px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width:768px){
+            .sidebar{
+                width:100%;
+                height:auto;
+                position:relative;
+            }
+
+            .content{
+                margin-left:0;
+            }
+        }
+
+    </style>
+
 </head>
 
 <body>
@@ -24,36 +141,84 @@
 <!-- ================= SIDEBAR ================= -->
 <div class="sidebar">
 
-    <h2>💰 FINANCE</h2>
+    <!-- TOP SCROLL AREA -->
+    <div class="sidebar-top">
 
-    <div class="user-box">
+        <div class="logo">
+            💰 <span>FINANCE</span>
+        </div>
 
-        {% if request.user.photo %}
-            <img src="{{ request.user.photo.url }}">
-        {% else %}
-            <img src="/media/profiles/default.png">
+        <div class="user-box">
+            {% if request.user.photo %}
+                <img src="{{ request.user.photo.url }}">
+            {% else %}
+                <img src="{% static 'images/default.png' %}">
+            {% endif %}
+
+            <h3>{{ request.user.nom }}</h3>
+            <small>{{ request.user.role|title }}</small>
+        </div>
+
+        <div class="menu-title">MENU</div>
+
+        <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+            <i class="fa-solid fa-house"></i> Dashboard
+        </a>
+
+        <a href="{% url 'revenu_list' %}" class="{% if request.resolver_match.url_name == 'revenu_list' %}active{% endif %}">
+            <i class="fa-solid fa-coins"></i> Revenus
+        </a>
+
+        <a href="{% url 'transaction_list' %}" class="{% if request.resolver_match.url_name == 'transaction_list' %}active{% endif %}">
+            <i class="fa-solid fa-money-bill-wave"></i> Transactions
+        </a>
+
+        <a href="{% url 'budget_list' %}" class="{% if request.resolver_match.url_name == 'budget_list' %}active{% endif %}">
+            <i class="fa-solid fa-chart-line"></i> Budgets
+        </a>
+
+        <a href="{% url 'category_list' %}" class="{% if request.resolver_match.url_name == 'category_list' %}active{% endif %}">
+            <i class="fa-solid fa-folder"></i> Catégories
+        </a>
+
+        <a href="{% url 'notification_list' %}" class="{% if request.resolver_match.url_name == 'notification_list' %}active{% endif %}">
+            <i class="fa-solid fa-bell"></i> Notifications
+        </a>
+
+        <a href="{% url 'historique' %}" class="{% if request.resolver_match.url_name == 'historique' %}active{% endif %}">
+            <i class="fa-solid fa-clock-rotate-left"></i> Historique
+        </a>
+
+        {% if request.user.is_authenticated %}
+
+        <div class="menu-title">ADMIN</div>
+
+        <a href="{% url 'admin_users' %}" class="{% if request.resolver_match.url_name == 'admin_users' %}active{% endif %}">
+            <i class="fa-solid fa-users"></i> Utilisateurs
+        </a>
+
+        <a href="{% url 'send_report' %}" class="{% if request.resolver_match.url_name == 'send_report' %}active{% endif %}">
+            <i class="fa-solid fa-file-lines"></i> Rapport
+        </a>
+
         {% endif %}
 
-        <strong>{{ request.user.nom }}</strong>
-        <small>{{ request.user.role|title }}</small>
+        <div class="menu-title">COMPTE</div>
+
+        <a href="{% url 'profile' %}" class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+            <i class="fa-solid fa-user"></i> Mon Profil
+        </a>
 
     </div>
 
-    <a href="{% url 'dashboard' %}"><i class="fa fa-home"></i> Dashboard</a>
-    <a href="{% url 'revenu_list' %}"><i class="fa fa-coins"></i> Revenus</a>
-    <a href="{% url 'transaction_list' %}"><i class="fa fa-money-bill-wave"></i> Transactions</a>
-    <a href="{% url 'budget_list' %}"><i class="fa fa-chart-line"></i> Budgets</a>
-    <a href="{% url 'category_list' %}"><i class="fa fa-folder"></i> Catégories</a>
-    <a href="{% url 'notification_list' %}"><i class="fa fa-bell"></i> Notifications</a>
-    <a href="{% url 'historique' %}"><i class="fa fa-history"></i> Historique</a>
+    <!-- BOTTOM FIXED -->
+    <div class="sidebar-bottom">
 
-    {% if request.user.is_authenticated %}
-        <a href="{% url 'admin_users' %}"><i class="fa fa-users"></i> Utilisateurs</a>
-        <a href="{% url 'send_report' %}"><i class="fa fa-file-alt"></i> Rapport</a>
-    {% endif %}
+        <a href="{% url 'logout' %}" class="logout">
+            <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
+        </a>
 
-    <a href="{% url 'profile' %}"><i class="fa fa-user-circle"></i> Mon Profil</a>
-    <a href="{% url 'logout' %}"><i class="fa fa-sign-out-alt"></i> Déconnexion</a>
+    </div>
 
 </div>
 
@@ -62,19 +227,6 @@
     {% block content %}
     {% endblock %}
 </div>
-
-<!-- ================= SERVICE WORKER ================= -->
-<script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/static/sw.js')
-    .then(function(registration) {
-        console.log('SW OK:', registration.scope);
-    })
-    .catch(function(error) {
-        console.log('SW ERROR:', error);
-    });
-}
-</script>
 
 </body>
 </html>
